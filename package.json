@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/Adebayod84/Todoapp#readme",
   "dependencies": {
+    "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-minify": "^3.1.0"
   },
