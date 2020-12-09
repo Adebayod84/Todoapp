@@ -3,7 +3,8 @@ const {src, dest, series, parallel} = require('gulp');
 const minify = require('gulp-minify');
 const concat = require('gulp-concat');
 const cleanCSS = require('gulp-clean-css');
-const imageMin = require('gulp-imagemin');
+const imagemin = require('gulp-imagemin');
+const ghpages = require ('gh-pages');
 
 
 const scriptTask = () => {
@@ -32,8 +33,14 @@ const styleTask = () => {
 
 const imageTask = () => {
   return src('src/images/**/*')
-   .pipe(imageMin())
-   .pipe('dist/images/')
+   .pipe(imagemin())
+   .pipe(dest('dist/images/'))
 }
 
-exports.default = parallel(scriptTask, styleTask, markupTask, imageTask);
+const deployTask = () => {
+  return ghpages.publish('dist', function (err) {});
+
+}
+
+exports.tasks = parallel(scriptTask, styleTask, markupTask, imageTask);
+exports.deploy = series(scriptTask, styleTask, markupTask, imageTask, deployTask);
